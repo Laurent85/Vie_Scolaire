@@ -8,11 +8,12 @@ using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using GemBox.Document;
+
+//using GemBox.Document;
 using Color = System.Drawing.Color;
-using LoadOptions = System.Xml.Linq.LoadOptions;
-using SaveOptions = System.Xml.Linq.SaveOptions;
+using Excel = Microsoft.Office.Interop.Excel;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace Vie_Scolaire
@@ -25,10 +26,12 @@ namespace Vie_Scolaire
         }
 
         private readonly OleDbConnection _connexionBdd = new OleDbConnection(@"Provider = Microsoft.ACE.OLEDB.12.0; Data Source = \\Serveur2008\Apps\Vie scolaire\Viescolaire.accdb");
+        //private readonly OleDbConnection _connexionBdd = new OleDbConnection(@"Provider = Microsoft.ACE.OLEDB.12.0; Data Source = D:\Viescolaire.accdb");
 
         private void OuvertureLogiciel(object sender, EventArgs e)
         {
-            //btnImportPhotos.Visible = false;
+            btnImportPhotos.Visible = false;
+            btnMaj.Visible = false;
             CopieRessources();
             if (_connexionBdd.State == ConnectionState.Closed) { _connexionBdd.Open(); }
             string requete;
@@ -49,23 +52,27 @@ namespace Vie_Scolaire
 
             if (CbxClasses.Text.Contains("Toutes"))
             {
-                if (chkCacherFiches.Checked) { requete = "SELECT Eleve, Classe FROM Eleves WHERE Infos <> ''"; }
-                else { requete = "SELECT Eleve, Classe FROM Eleves"; }
+                if (chkCacherFiches.Checked) { requete = "SELECT Eleve, Classe FROM Eleves WHERE Infos <> '' ORDER BY Eleve"; }
+                else { requete = "SELECT Eleve, Classe FROM Eleves ORDER BY Eleve"; }
                 OleDbDataAdapter adapter = new OleDbDataAdapter(requete, _connexionBdd);
                 DataTable source = new DataTable();
                 adapter.Fill(source);
                 cbxEleves.DataSource = source;
                 cbxEleves.DisplayMember = "Eleve";
+                var count = cbxEleves.Items.Count;
+                lblNombre.Text = count.ToString() + @" élèves";
             }
             else
             {
-                if (chkCacherFiches.Checked) { requete = "SELECT Eleve, Classe FROM Eleves WHERE Infos <> '' AND Classe = '" + CbxClasses.Text + "'"; }
-                else { requete = "SELECT Eleve, Classe FROM Eleves WHERE Classe = '" + CbxClasses.Text + "'"; }
+                if (chkCacherFiches.Checked) { requete = "SELECT Eleve, Classe FROM Eleves WHERE Infos <> '' AND Classe = '" + CbxClasses.Text + "' ORDER BY Eleve "; }
+                else { requete = "SELECT Eleve, Classe FROM Eleves WHERE Classe = '" + CbxClasses.Text + "' ORDER BY Eleve "; }
                 OleDbDataAdapter adapter = new OleDbDataAdapter(requete, _connexionBdd);
                 DataTable source = new DataTable();
                 adapter.Fill(source);
                 cbxEleves.DataSource = source;
                 cbxEleves.DisplayMember = "Eleve";
+                var count = cbxEleves.Items.Count;
+                lblNombre.Text = count.ToString() + @" élèves";
             }
         }
 
@@ -75,12 +82,18 @@ namespace Vie_Scolaire
 
             OleDbCommand cmd = new OleDbCommand("SELECT Photo, * FROM Eleves WHERE Eleve = '" + cbxEleves.Text + "'", _connexionBdd);
 
-            var imageByte = (byte[])cmd.ExecuteScalar();
-
-            if (imageByte != null)
+            try
             {
-                var memStream = new MemoryStream(imageByte);
-                PhotoEleve.Image = Image.FromStream(memStream);
+                var imageByte = (byte[])cmd.ExecuteScalar();
+                if (imageByte != null)
+                {
+                    var memStream = new MemoryStream(imageByte);
+                    PhotoEleve.Image = Image.FromStream(memStream);
+                }
+            }
+            catch
+            {
+                // ignored
             }
 
             OleDbDataReader reader = cmd.ExecuteReader();
@@ -254,12 +267,11 @@ namespace Vie_Scolaire
                     //Process p = Process.Start(pi);
                     //if (p != null) p.WaitForExit();
                     //File.Delete(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\" +
-                                //CultureInfo.InvariantCulture.TextInfo.ToTitleCase(lblNomEleve.Text) + ".docx");
+                    //CultureInfo.InvariantCulture.TextInfo.ToTitleCase(lblNomEleve.Text) + ".docx");
                     File.Delete(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\" +
                                 CultureInfo.InvariantCulture.TextInfo.ToTitleCase(lblNomEleve.Text) + ".pdf");
                     File.Delete(@"c:\" + lblNomEleve.Text + ".jpg");
                 }
-               
             }
         }
 
@@ -379,6 +391,89 @@ namespace Vie_Scolaire
             PhotoEleve.Image = null;
             lblNomEleve.Text = "";
             lblClasseEleve.Text = "";
+        }
+
+        private void btnMaj_Click(object sender, EventArgs e)
+        {
+            //Create COM Objects. Create a COM object for everything that is referenced
+            Excel.Application xlApp = new Excel.Application();
+            Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(@"\\serveur2008\apps\Vie scolaire\Viesco.xls");
+            Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[1];
+            Excel.Range xlRange = xlWorksheet.UsedRange;
+
+            int rowCount = xlRange.Rows.Count;
+
+            for (int i = 5; i <= rowCount; i++)
+            {
+                {
+                    string cmdStr = "Select count(*) from Eleves where Eleve = '" + xlRange.Cells[i, 1].Value2 + "'"; //get the existence of the record as count
+
+                    OleDbCommand cmd = new OleDbCommand(cmdStr, _connexionBdd);
+
+                    int count = (int)cmd.ExecuteScalar();
+
+                    if (count > 0)
+                    {
+                        // L'élève existe déjà, on le met à jour
+                        OleDbCommand cmd2 = new OleDbCommand("update Eleves set Classe = @p2, Naissance = @p3, Responsable = @p4, Adresse = @p5, CP_Ville = @p6, Tel_Domicile = @p7, Tel_port_resp = @p8, Mail_Resp = @p9, Conjoint = @p10, Tel_port_Conjoint = @p11, Mail_Conjoint = @p12, Flag = @p13 WHERE Eleve= '" + xlRange.Cells[i, 1].Value2 + "'", _connexionBdd);
+                        cmd2.Parameters.AddWithValue("@p2", xlRange.Cells[i, 2].Value2); //classe
+                        cmd2.Parameters.AddWithValue("@p3", xlRange.Cells[i, 3].Value2); //naissance
+                        cmd2.Parameters.AddWithValue("@p4", xlRange.Cells[i, 4].Value2); //responsable
+                        cmd2.Parameters.AddWithValue("@p5", xlRange.Cells[i, 5].Value2); //adresse
+                        cmd2.Parameters.AddWithValue("@p6", xlRange.Cells[i, 6].Value2); //CP
+                        if (xlRange.Cells[i, 7].Value2 != null) cmd2.Parameters.AddWithValue("@p7", String.Format("{0:0# ## ## ## ##}", xlRange.Cells[i, 7].Value2)); else cmd2.Parameters.AddWithValue("@p7", "");
+                        if (xlRange.Cells[i, 8].Value2 != null) cmd2.Parameters.AddWithValue("@p8", String.Format("{0:0# ## ## ## ##}", xlRange.Cells[i, 8].Value2)); else cmd2.Parameters.AddWithValue("@p8", "");
+                        if (xlRange.Cells[i, 9].Value2 != null) cmd2.Parameters.AddWithValue("@p9", xlRange.Cells[i, 9].Value2); else cmd2.Parameters.AddWithValue("@p9", "");//Mail_resp
+                        if (xlRange.Cells[i, 10].Value2 != null) cmd2.Parameters.AddWithValue("@p10", xlRange.Cells[i, 10].Value2); else cmd2.Parameters.AddWithValue("@p10", "");//Conjoint
+                        if (xlRange.Cells[i, 11].Value2 != null) cmd2.Parameters.AddWithValue("@p11", String.Format("{0:0# ## ## ## ##}", xlRange.Cells[i, 11].Value2)); else cmd2.Parameters.AddWithValue("@p11", "");
+                        if (xlRange.Cells[i, 12].Value2 != null) cmd2.Parameters.AddWithValue("@p12", xlRange.Cells[i, 12].Value2); else cmd2.Parameters.AddWithValue("@p12", "");//Mail_conjoint
+                        cmd2.Parameters.AddWithValue("@p13", 1);
+                        cmd2.ExecuteNonQuery();
+                    }
+                    else if (count == 0)
+                    {
+                        //L'élève n'existe pas, on le créé
+                        OleDbCommand cmd2 = new OleDbCommand("insert into Eleves (Eleve, Classe, Naissance, Responsable, Adresse, CP_Ville, Tel_Domicile, Tel_port_resp, Mail_Resp, Conjoint, Tel_port_Conjoint, Mail_Conjoint, Flag) values (@p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13)", _connexionBdd);
+                        cmd2.Parameters.AddWithValue("@p1", xlRange.Cells[i, 1].Value2); //Nom Prénom
+                        cmd2.Parameters.AddWithValue("@p2", xlRange.Cells[i, 2].Value2); //classe
+                        cmd2.Parameters.AddWithValue("@p3", xlRange.Cells[i, 3].Value2); //naissance
+                        cmd2.Parameters.AddWithValue("@p4", xlRange.Cells[i, 4].Value2); //responsable
+                        cmd2.Parameters.AddWithValue("@p5", xlRange.Cells[i, 5].Value2); //adresse
+                        cmd2.Parameters.AddWithValue("@p6", xlRange.Cells[i, 6].Value2); //CP
+                        if (xlRange.Cells[i, 7].Value2 != null) cmd2.Parameters.AddWithValue("@p7", String.Format("{0:0# ## ## ## ##}", xlRange.Cells[i, 7].Value2)); else cmd2.Parameters.AddWithValue("@p7", "");
+                        if (xlRange.Cells[i, 8].Value2 != null) cmd2.Parameters.AddWithValue("@p8", String.Format("{0:0# ## ## ## ##}", xlRange.Cells[i, 8].Value2)); else cmd2.Parameters.AddWithValue("@p8", "");
+                        if (xlRange.Cells[i, 9].Value2 != null) cmd2.Parameters.AddWithValue("@p9", xlRange.Cells[i, 9].Value2); else cmd2.Parameters.AddWithValue("@p9", "");//Mail_resp
+                        if (xlRange.Cells[i, 10].Value2 != null) cmd2.Parameters.AddWithValue("@p10", xlRange.Cells[i, 10].Value2); else cmd2.Parameters.AddWithValue("@p10", "");//Conjoint
+                        if (xlRange.Cells[i, 11].Value2 != null) cmd2.Parameters.AddWithValue("@p11", String.Format("{0:0# ## ## ## ##}", xlRange.Cells[i, 11].Value2)); else cmd2.Parameters.AddWithValue("@p11", "");
+                        if (xlRange.Cells[i, 12].Value2 != null) cmd2.Parameters.AddWithValue("@p12", xlRange.Cells[i, 12].Value2); else cmd2.Parameters.AddWithValue("@p12", "");//Mail_conjoint
+                        cmd2.Parameters.AddWithValue("@p13", 1);
+                        cmd2.ExecuteNonQuery();
+                    }
+                }
+            }
+            //L'élève n'est plus au collège, on le supprime
+            OleDbCommand cmd3 = new OleDbCommand("DELETE * FROM Eleves WHERE Flag Is Null", _connexionBdd);
+            cmd3.ExecuteNonQuery();
+
+            //Réinitialisation du flag
+            OleDbCommand cmd4 = new OleDbCommand("update Eleves set Flag = Null", _connexionBdd);
+            cmd4.ExecuteNonQuery();
+
+            //cleanup
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+
+            //release com objects to fully kill excel process from running in the background
+            Marshal.ReleaseComObject(xlRange);
+            Marshal.ReleaseComObject(xlWorksheet);
+
+            //close and release
+            xlWorkbook.Close();
+            Marshal.ReleaseComObject(xlWorkbook);
+
+            //quit and release
+            xlApp.Quit();
+            Marshal.ReleaseComObject(xlApp);
         }
     }
 }

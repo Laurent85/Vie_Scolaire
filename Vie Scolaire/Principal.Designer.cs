@@ -53,6 +53,8 @@
             this.Calendrier = new System.Windows.Forms.DateTimePicker();
             this.btnImprimerClasse = new System.Windows.Forms.Button();
             this.chkCacherFiches = new System.Windows.Forms.CheckBox();
+            this.btnMaj = new System.Windows.Forms.Button();
+            this.lblNombre = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.PhotoEleve)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PhotoLogoCollege)).BeginInit();
             this.grpBoxResponsables.SuspendLayout();
@@ -304,12 +306,33 @@
             this.chkCacherFiches.UseVisualStyleBackColor = true;
             this.chkCacherFiches.CheckedChanged += new System.EventHandler(this.chkCacherFiches_CheckedChanged);
             // 
+            // btnMaj
+            // 
+            this.btnMaj.Location = new System.Drawing.Point(780, 39);
+            this.btnMaj.Name = "btnMaj";
+            this.btnMaj.Size = new System.Drawing.Size(147, 23);
+            this.btnMaj.TabIndex = 24;
+            this.btnMaj.Text = "Mise à jour";
+            this.btnMaj.UseVisualStyleBackColor = true;
+            this.btnMaj.Click += new System.EventHandler(this.btnMaj_Click);
+            // 
+            // lblNombre
+            // 
+            this.lblNombre.AutoSize = true;
+            this.lblNombre.Location = new System.Drawing.Point(482, 123);
+            this.lblNombre.Name = "lblNombre";
+            this.lblNombre.Size = new System.Drawing.Size(44, 13);
+            this.lblNombre.TabIndex = 26;
+            this.lblNombre.Text = "Nombre";
+            // 
             // Principal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.PapayaWhip;
             this.ClientSize = new System.Drawing.Size(1252, 621);
+            this.Controls.Add(this.lblNombre);
+            this.Controls.Add(this.btnMaj);
             this.Controls.Add(this.chkCacherFiches);
             this.Controls.Add(this.btnImprimerClasse);
             this.Controls.Add(this.Calendrier);
@@ -364,6 +387,8 @@
         private System.Windows.Forms.DateTimePicker Calendrier;
         private System.Windows.Forms.Button btnImprimerClasse;
         private System.Windows.Forms.CheckBox chkCacherFiches;
+        private System.Windows.Forms.Button btnMaj;
+        private System.Windows.Forms.Label lblNombre;
     }
 }
 
