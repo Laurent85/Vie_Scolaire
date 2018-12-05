@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.106
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vie Scolaire", "Vie Scolaire\Vie Scolaire.csproj", "{3C9A6BBC-96EA-4BE7-8EC6-6C9E8E8E5A68}"
 EndProject
@@ -9,17 +9,21 @@ Project("{840C416C-B8F3-42BC-B0DD-F6BB14C9F8CB}") = "Installation", "Installatio
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		All|Any CPU = All|Any CPU
 		Debug|Any CPU = Debug|Any CPU
 		DefaultBuild|Any CPU = DefaultBuild|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3C9A6BBC-96EA-4BE7-8EC6-6C9E8E8E5A68}.All|Any CPU.ActiveCfg = Release|Any CPU
+		{3C9A6BBC-96EA-4BE7-8EC6-6C9E8E8E5A68}.All|Any CPU.Build.0 = Release|Any CPU
 		{3C9A6BBC-96EA-4BE7-8EC6-6C9E8E8E5A68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3C9A6BBC-96EA-4BE7-8EC6-6C9E8E8E5A68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C9A6BBC-96EA-4BE7-8EC6-6C9E8E8E5A68}.DefaultBuild|Any CPU.ActiveCfg = Debug|Any CPU
 		{3C9A6BBC-96EA-4BE7-8EC6-6C9E8E8E5A68}.DefaultBuild|Any CPU.Build.0 = Debug|Any CPU
 		{3C9A6BBC-96EA-4BE7-8EC6-6C9E8E8E5A68}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C9A6BBC-96EA-4BE7-8EC6-6C9E8E8E5A68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B69D179-B492-402C-B243-5E811E7A994F}.All|Any CPU.ActiveCfg = DefaultBuild
 		{8B69D179-B492-402C-B243-5E811E7A994F}.Debug|Any CPU.ActiveCfg = DefaultBuild
 		{8B69D179-B492-402C-B243-5E811E7A994F}.Debug|Any CPU.Build.0 = DefaultBuild
 		{8B69D179-B492-402C-B243-5E811E7A994F}.DefaultBuild|Any CPU.ActiveCfg = DefaultBuild
@@ -29,5 +33,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {322CF339-C4A4-446A-9F5A-55B1CCD3D18D}
 	EndGlobalSection
 EndGlobal

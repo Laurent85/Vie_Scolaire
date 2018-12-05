@@ -55,6 +55,10 @@
             this.chkCacherFiches = new System.Windows.Forms.CheckBox();
             this.btnMaj = new System.Windows.Forms.Button();
             this.lblNombre = new System.Windows.Forms.Label();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.Compteur = new System.Windows.Forms.Label();
+            this.lblAnniversaire = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.PhotoEleve)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PhotoLogoCollege)).BeginInit();
             this.grpBoxResponsables.SuspendLayout();
@@ -93,7 +97,7 @@
             // 
             // btnImportPhotos
             // 
-            this.btnImportPhotos.Location = new System.Drawing.Point(780, 85);
+            this.btnImportPhotos.Location = new System.Drawing.Point(780, 90);
             this.btnImportPhotos.Name = "btnImportPhotos";
             this.btnImportPhotos.Size = new System.Drawing.Size(147, 23);
             this.btnImportPhotos.TabIndex = 3;
@@ -287,7 +291,7 @@
             // 
             // btnImprimerClasse
             // 
-            this.btnImprimerClasse.Location = new System.Drawing.Point(780, 114);
+            this.btnImprimerClasse.Location = new System.Drawing.Point(780, 123);
             this.btnImprimerClasse.Name = "btnImprimerClasse";
             this.btnImprimerClasse.Size = new System.Drawing.Size(149, 23);
             this.btnImprimerClasse.TabIndex = 22;
@@ -325,12 +329,52 @@
             this.lblNombre.TabIndex = 26;
             this.lblNombre.Text = "Nombre";
             // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(780, 62);
+            this.progressBar1.Maximum = 600;
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(147, 23);
+            this.progressBar1.Step = 1;
+            this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.progressBar1.TabIndex = 27;
+            // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.WorkerReportsProgress = true;
+            this.backgroundWorker1.WorkerSupportsCancellation = true;
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
+            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_Completed);
+            // 
+            // Compteur
+            // 
+            this.Compteur.AutoSize = true;
+            this.Compteur.Location = new System.Drawing.Point(933, 71);
+            this.Compteur.Name = "Compteur";
+            this.Compteur.Size = new System.Drawing.Size(0, 13);
+            this.Compteur.TabIndex = 28;
+            // 
+            // lblAnniversaire
+            // 
+            this.lblAnniversaire.AutoSize = true;
+            this.lblAnniversaire.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAnniversaire.ForeColor = System.Drawing.Color.DarkMagenta;
+            this.lblAnniversaire.Location = new System.Drawing.Point(72, 604);
+            this.lblAnniversaire.Name = "lblAnniversaire";
+            this.lblAnniversaire.Size = new System.Drawing.Size(166, 16);
+            this.lblAnniversaire.TabIndex = 29;
+            this.lblAnniversaire.Text = "Anniversaires du jour : ";
+            // 
             // Principal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.PapayaWhip;
-            this.ClientSize = new System.Drawing.Size(1252, 621);
+            this.ClientSize = new System.Drawing.Size(1252, 642);
+            this.Controls.Add(this.lblAnniversaire);
+            this.Controls.Add(this.Compteur);
+            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.lblNombre);
             this.Controls.Add(this.btnMaj);
             this.Controls.Add(this.chkCacherFiches);
@@ -389,6 +433,10 @@
         private System.Windows.Forms.CheckBox chkCacherFiches;
         private System.Windows.Forms.Button btnMaj;
         private System.Windows.Forms.Label lblNombre;
+        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.Label Compteur;
+        private System.Windows.Forms.Label lblAnniversaire;
     }
 }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Data;
 using System.Data.OleDb;
 using System.Diagnostics;
@@ -26,12 +27,17 @@ namespace Vie_Scolaire
         }
 
         private readonly OleDbConnection _connexionBdd = new OleDbConnection(@"Provider = Microsoft.ACE.OLEDB.12.0; Data Source = \\Serveur2008\Apps\Vie scolaire\Viescolaire.accdb");
+
         //private readonly OleDbConnection _connexionBdd = new OleDbConnection(@"Provider = Microsoft.ACE.OLEDB.12.0; Data Source = D:\Viescolaire.accdb");
+        public int Rowcount;
+        public string DateDuJour = DateTime.Now.ToString("dd/MM");
 
         private void OuvertureLogiciel(object sender, EventArgs e)
         {
             btnImportPhotos.Visible = false;
-            btnMaj.Visible = false;
+            //btnMaj.Visible = false;
+            progressBar1.Visible = false;
+            Compteur.Visible = false;
             CopieRessources();
             if (_connexionBdd.State == ConnectionState.Closed) { _connexionBdd.Open(); }
             string requete;
@@ -43,6 +49,7 @@ namespace Vie_Scolaire
             adapter.Fill(source);
             CbxClasses.DataSource = source;
             CbxClasses.DisplayMember = "Classe";
+            ChercherAnniversaire();
             //CbxClasses.SelectedText = "Toutes les classes";
         }
 
@@ -395,15 +402,22 @@ namespace Vie_Scolaire
 
         private void btnMaj_Click(object sender, EventArgs e)
         {
+            progressBar1.Visible = true;
+            Compteur.Visible = true;
+            backgroundWorker1.RunWorkerAsync();
+        }
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
             //Create COM Objects. Create a COM object for everything that is referenced
             Excel.Application xlApp = new Excel.Application();
             Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(@"\\serveur2008\apps\Vie scolaire\Viesco.xls");
             Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[1];
             Excel.Range xlRange = xlWorksheet.UsedRange;
 
-            int rowCount = xlRange.Rows.Count;
+            Rowcount = xlRange.Rows.Count;
 
-            for (int i = 5; i <= rowCount; i++)
+            for (int i = 5; i <= Rowcount; i++)
             {
                 {
                     string cmdStr = "Select count(*) from Eleves where Eleve = '" + xlRange.Cells[i, 1].Value2 + "'"; //get the existence of the record as count
@@ -449,6 +463,10 @@ namespace Vie_Scolaire
                         cmd2.Parameters.AddWithValue("@p13", 1);
                         cmd2.ExecuteNonQuery();
                     }
+                    // Wait 100 milliseconds.
+                    //Thread.Sleep(100);
+                    // Report progress.
+                    backgroundWorker1.ReportProgress(i);
                 }
             }
             //L'élève n'est plus au collège, on le supprime
@@ -474,6 +492,45 @@ namespace Vie_Scolaire
             //quit and release
             xlApp.Quit();
             Marshal.ReleaseComObject(xlApp);
+        }
+
+        private void backgroundWorker1_ProgressChanged(object sender,
+            ProgressChangedEventArgs e)
+        {
+            progressBar1.Maximum = Rowcount;
+            int rowCount = Rowcount - 4;
+            // Change the value of the ProgressBar to the BackgroundWorker progress.
+            progressBar1.Value = e.ProgressPercentage;
+            // Set the text.
+            Compteur.Text = (e.ProgressPercentage - 4) + @" / " + rowCount;
+        }
+
+        private void backgroundWorker1_Completed(object sender, RunWorkerCompletedEventArgs e)
+        {
+            int rowCount = Rowcount - 4;
+            progressBar1.Visible = false;
+            Compteur.Visible = false;
+            MessageBox.Show(@"Opération terminée avec succes !" + Environment.NewLine + rowCount + @" élèves mis à jour");
+        }
+
+        private void ChercherAnniversaire()
+        {
+            OleDbCommand cmd = new OleDbCommand("SELECT Eleve, Naissance FROM Eleves", _connexionBdd);
+            OleDbDataReader reader = cmd.ExecuteReader();
+            while (reader != null && reader.Read())
+            {
+                
+
+                if (reader["Naissance"].ToString().Contains(DateDuJour))
+                {
+                    int annéeNaissance = int.Parse(reader["Naissance"].ToString().Substring(6, 2));
+                    int annéeEnCours = int.Parse(DateTime.Now.ToString("yy"));
+                    int age = annéeEnCours - annéeNaissance;
+
+                    lblAnniversaire.Text = lblAnniversaire.Text + reader["Eleve"] + @" (" +
+                                           age + @" ans) - ";
+                }
+            }
         }
     }
 }

@@ -1,28 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<DOCUMENT Type="Advanced Installer" CreateVersion="14.6" version="15.3" Modules="architect" RootPath="." Language="en" Id="{22B36123-73AB-43B2-B662-467E8B1408E3}">
+<DOCUMENT Type="Advanced Installer" CreateVersion="15.4.1" version="15.4.1" Modules="simple" RootPath="." Language="en" Id="{8E2AFCF7-9059-4A9F-B016-84BF93D5250C}">
   <COMPONENT cid="caphyon.advinst.msicomp.ProjectOptionsComponent">
     <ROW Name="HiddenItems" Value="AppXProductDetailsComponent;AppXDependenciesComponent;AppXAppDetailsComponent;AppXVisualAssetsComponent;AppXCapabilitiesComponent;AppXAppDeclarationsComponent;AppXUriRulesComponent"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
     <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_FicheEleve.docx" Value="..\Vie Scolaire\bin\Debug\Resources"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_VieScolaire.exe" Value="..\Vie Scolaire\bin\Debug"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_VieScolaire.exe.config" Value="..\Vie Scolaire\bin\Debug"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_VieScolaire.pdb" Value="..\Vie Scolaire\bin\Debug"/>
-    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_FicheEleve.docx" Value="FicheEleve.docx"/>
-    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_VieScolaire.exe" Value="Vie Scolaire.exe"/>
-    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_VieScolaire.exe.config" Value="Vie Scolaire.exe.config"/>
-    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_VieScolaire.pdb" Value="Vie Scolaire.pdb"/>
     <ROW Property="ALLUSERS" Value="1"/>
     <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
-    <ROW Property="ARPPRODUCTICON" Value="VieScolaire.exe" Type="8"/>
-    <ROW Property="Manufacturer" Value="Saint Jacques"/>
-    <ROW Property="ProductCode" Value="1033:{4663820B-D56E-4AE8-B325-ACE01B061B91} " Type="16"/>
+    <ROW Property="Manufacturer" Value="Your Company"/>
+    <ROW Property="ProductCode" Value="1033:{0A0ED531-EE61-41AB-A205-37C81F57DCF4} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
-    <ROW Property="ProductName" Value="Vie scolaire"/>
+    <ROW Property="ProductName" Value="Your Application"/>
     <ROW Property="ProductVersion" Value="1.0.0" Type="32"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
-    <ROW Property="UpgradeCode" Value="{871FE467-08A9-4C3A-8D47-E459BEB08371}"/>
+    <ROW Property="UpgradeCode" Value="{8F5AAB3F-747F-4754-816F-952D44AAA507}"/>
     <ROW Property="WindowsType9X" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
     <ROW Property="WindowsType9XDisplay" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
     <ROW Property="WindowsTypeNT40" MultiBuildValue="DefaultBuild:Windows NT 4.0" ValueLocId="-"/>
@@ -34,34 +25,14 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiDirsComponent">
     <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1"/>
-    <ROW Directory="DesktopFolder" Directory_Parent="TARGETDIR" DefaultDir="DESKTO~1|DesktopFolder" IsPseudoRoot="1"/>
-    <ROW Directory="Resources_Dir" Directory_Parent="VieScolaire_Dir" DefaultDir="RESOUR~1|Resources"/>
-    <ROW Directory="SHORTCUTDIR" Directory_Parent="TARGETDIR" DefaultDir="SHORTC~1|SHORTCUTDIR" IsPseudoRoot="1"/>
     <ROW Directory="TARGETDIR" DefaultDir="SourceDir"/>
-    <ROW Directory="VieScolaire_Dir" Directory_Parent="APPDIR" DefaultDir="VIESCO~1|Vie Scolaire"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
-    <ROW Component="ProductInformation" ComponentId="{99C55FFC-82E0-42AA-AD8C-5FA4B4D44693}" Directory_="APPDIR" Attributes="4" KeyPath="Version"/>
-    <ROW Component="SHORTCUTDIR" ComponentId="{95D67D99-CA98-4561-94D2-BB8D11642BAF}" Directory_="SHORTCUTDIR" Attributes="0"/>
-    <ROW Component="VieScolaire_ContentOutput_Resources" ComponentId="{7B859CA9-91EB-456B-B010-733D15F96EBA}" Directory_="Resources_Dir" Attributes="0" KeyPath="FicheEleve.docx" Type="0"/>
-    <ROW Component="VieScolaire_PrimaryOutput" ComponentId="{334C77AC-7DAB-41D3-845A-4BDD73C07B49}" Directory_="VieScolaire_Dir" Attributes="0" KeyPath="VieScolaire.exe"/>
-    <ROW Component="VieScolaire_SymbolsOutput" ComponentId="{85B5B4D7-683A-469E-ACDB-AC1E10DA5DF1}" Directory_="VieScolaire_Dir" Attributes="0" KeyPath="VieScolaire.pdb"/>
+    <ROW Component="ProductInformation" ComponentId="{D8AA52E7-B9C0-4850-8970-6626E44874B2}" Directory_="APPDIR" Attributes="4" KeyPath="Version"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
-    <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0" Components="ProductInformation SHORTCUTDIR VieScolaire_ContentOutput_Resources VieScolaire_PrimaryOutput VieScolaire_SymbolsOutput"/>
+    <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0" Components="ProductInformation"/>
     <ATTRIBUTE name="CurrentFeature" value="MainFeature"/>
-  </COMPONENT>
-  <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
-    <ROW File="FicheEleve.docx" Component_="VieScolaire_ContentOutput_Resources" FileName="FICHEE~2.DOC|[|AI_PROPPATH_FILENAME_PERBUILD_FicheEleve.docx]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_FicheEleve.docx&gt;" SelfReg="false" NextFile="VieScolaire.pdb"/>
-    <ROW File="VieScolaire.exe" Component_="VieScolaire_PrimaryOutput" FileName="VIESCO~2.EXE|[|AI_PROPPATH_FILENAME_PERBUILD_VieScolaire.exe]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_VieScolaire.exe&gt;" SelfReg="false" NextFile="VieScolaire.exe.config" DigSign="true"/>
-    <ROW File="VieScolaire.exe.config" Component_="VieScolaire_PrimaryOutput" FileName="VIESCO~2.CON|[|AI_PROPPATH_FILENAME_PERBUILD_VieScolaire.exe.config]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_VieScolaire.exe.config&gt;" SelfReg="false" NextFile="FicheEleve.docx"/>
-    <ROW File="VieScolaire.pdb" Component_="VieScolaire_SymbolsOutput" FileName="VIESCO~2.PDB|[|AI_PROPPATH_FILENAME_PERBUILD_VieScolaire.pdb]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_VieScolaire.pdb&gt;" SelfReg="false"/>
-  </COMPONENT>
-  <COMPONENT cid="caphyon.advinst.msicomp.AppPathsComponent">
-    <ROW Name="AI_APPPATH_PERBUILD_FicheEleve.docx" Path="[|AI_PROPPATH_DIR_PERBUILD_FicheEleve.docx]\[|AI_PROPPATH_FILENAME_PERBUILD_FicheEleve.docx]" Type="2" Content="0"/>
-    <ROW Name="AI_APPPATH_PERBUILD_VieScolaire.exe" Path="[|AI_PROPPATH_DIR_PERBUILD_VieScolaire.exe]\[|AI_PROPPATH_FILENAME_PERBUILD_VieScolaire.exe]" Type="2" Content="0"/>
-    <ROW Name="AI_APPPATH_PERBUILD_VieScolaire.exe.config" Path="[|AI_PROPPATH_DIR_PERBUILD_VieScolaire.exe.config]\[|AI_PROPPATH_FILENAME_PERBUILD_VieScolaire.exe.config]" Type="2" Content="0"/>
-    <ROW Name="AI_APPPATH_PERBUILD_VieScolaire.pdb" Path="[|AI_PROPPATH_DIR_PERBUILD_VieScolaire.pdb]\[|AI_PROPPATH_FILENAME_PERBUILD_VieScolaire.pdb]" Type="2" Content="0"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
     <ROW BootstrOptKey="GlobalOptions" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" Options="2"/>
@@ -91,7 +62,6 @@
     <ROW Name="aicustact.dll" SourcePath="&lt;AI_CUSTACTS&gt;aicustact.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiControlEventComponent">
-    <ROW Dialog_="FatalError" Control_="Finish" Event="DoAction" Argument="AI_SHOW_LOG" Condition="(MsiLogFileLocation AND AI_LOG_CHECKBOX)" Ordering="101" MsiKey="FatalError#Finish#DoAction#AI_SHOW_LOG#(MsiLogFileLocation AND AI_LOG_CHECKBOX)"/>
     <ROW Dialog_="WelcomeDlg" Control_="Next" Event="NewDialog" Argument="FolderDlg" Condition="AI_INSTALL" Ordering="1"/>
     <ROW Dialog_="FolderDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_INSTALL" Ordering="201"/>
     <ROW Dialog_="FolderDlg" Control_="Back" Event="NewDialog" Argument="WelcomeDlg" Condition="AI_INSTALL" Ordering="1"/>
@@ -114,10 +84,6 @@
     <ROW Dialog_="ResumeDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_RESUME" Ordering="299"/>
     <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_PATCH" Ordering="199"/>
     <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PatchWelcomeDlg" Condition="AI_PATCH" Ordering="203"/>
-    <ROW Dialog_="CustomizeDlg" Control_="Next" Event="DoAction" Argument="AI_InstallModeCheck" Condition="AI_MAINT" Ordering="100" MsiKey="CustomizeDlg#Next#DoAction#AI_InstallModeCheck#AI_MAINT"/>
-  </COMPONENT>
-  <COMPONENT cid="caphyon.advinst.msicomp.MsiCreateFolderComponent">
-    <ROW Directory_="SHORTCUTDIR" Component_="SHORTCUTDIR" ManualDelete="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCustActComponent">
     <ROW Action="AI_DOWNGRADE" Type="19" Target="4010"/>
@@ -132,9 +98,6 @@
     <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]"/>
     <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]"/>
     <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
-  </COMPONENT>
-  <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
-    <ROW Name="VieScolaire.exe" SourcePath="..\Vie Scolaire\bin\Debug\Vie Scolaire.exe" Index="0"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstExSeqComponent">
     <ROW Action="AI_DOWNGRADE" Condition="AI_NEWERPRODUCTFOUND AND (UILevel &lt;&gt; 5)" Sequence="210"/>
@@ -160,21 +123,11 @@
     <ROW Registry="Path" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Path" Value="[APPDIR]" Component_="ProductInformation"/>
     <ROW Registry="Version" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Version" Value="[ProductVersion]" Component_="ProductInformation"/>
   </COMPONENT>
-  <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
-    <ROW Shortcut="VieScolaire" Directory_="SHORTCUTDIR" Name="VIESCO~1|Vie Scolaire" Component_="VieScolaire_PrimaryOutput" Target="[#VieScolaire.exe]" Hotkey="0" IconIndex="0" ShowCmd="1"/>
-    <ROW Shortcut="VieScolaire_1" Directory_="DesktopFolder" Name="VIESCO~1|Vie Scolaire" Component_="VieScolaire_PrimaryOutput" Target="[#VieScolaire.exe]" Hotkey="0" IconIndex="0" ShowCmd="1"/>
-  </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
     <ATTRIBUTE name="UsedTheme" value="classic"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiUpgradeComponent">
     <ROW UpgradeCode="[|UpgradeCode]" VersionMin="0.0.1" VersionMax="[|ProductVersion]" Attributes="257" ActionProperty="OLDPRODUCTS"/>
     <ROW UpgradeCode="[|UpgradeCode]" VersionMin="[|ProductVersion]" Attributes="2" ActionProperty="AI_NEWERPRODUCTFOUND"/>
-  </COMPONENT>
-  <COMPONENT cid="caphyon.advinst.msicomp.VsProjectComponent">
-    <ROW ProjectId="{3c9a6bbc-96ea-4be7-8ec6-6c9e8e8e5a68}" ProjectName="Vie Scolaire" OutputGroup="PrimaryOutput" OutputFile="VieScolaire.exe" OutputFileShortcut="VieScolaire"/>
-    <ROW ProjectId="{3c9a6bbc-96ea-4be7-8ec6-6c9e8e8e5a68}" ProjectName="Vie Scolaire" OutputGroup="PrimaryOutput" OutputFile="VieScolaire.exe.config"/>
-    <ROW ProjectId="{3c9a6bbc-96ea-4be7-8ec6-6c9e8e8e5a68}" ProjectName="Vie Scolaire" OutputGroup="ContentOutput" OutputFile="FicheEleve.docx"/>
-    <ROW ProjectId="{3c9a6bbc-96ea-4be7-8ec6-6c9e8e8e5a68}" ProjectName="Vie Scolaire" OutputGroup="SymbolsOutput" OutputFile="VieScolaire.pdb"/>
   </COMPONENT>
 </DOCUMENT>
