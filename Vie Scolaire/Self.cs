@@ -13,11 +13,6 @@ namespace Vie_Scolaire
             InitializeComponent();
         }
 
-        public string GetWeekDayName(DateTime d)
-        {
-            return System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.DayNames[(int)d.DayOfWeek];
-        }
-
         private readonly OleDbConnection _connexionBdd = new OleDbConnection(@"Provider = Microsoft.ACE.OLEDB.12.0; Data Source = \\Serveur2008\Apps\Vie scolaire\Viescolaire.accdb");
 
         private void Self_Load(object sender, EventArgs e)
@@ -31,12 +26,12 @@ namespace Vie_Scolaire
             CalendarWeekRule myCWR = myCI.DateTimeFormat.CalendarWeekRule;
             DayOfWeek myFirstDOW = myCI.DateTimeFormat.FirstDayOfWeek;
             int NuméroSemaine = myCal.GetWeekOfYear(DateTime.Now, myCWR, myFirstDOW) % 2;
-            if (NuméroSemaine == 0) { lblSemaine.Text = "Nous sommes " + GetWeekDayName(DateTime.Now) +" en semaine PAIRE"; rdBtnPaire.Checked = true; }
-            else { lblSemaine.Text = "Nous sommes " + GetWeekDayName(DateTime.Now) +"  en semaine IMPAIRE"; rdBtnImpaire.Checked = true; }
-            chbx_CheckedChanged(sender, e);
+            if (NuméroSemaine == 0) { lblSemaine.Text = "Nous sommes " + NomDuJour(DateTime.Now) + " en semaine PAIRE"; rdBtnPaire.Checked = true; }
+            else { lblSemaine.Text = "Nous sommes " + NomDuJour(DateTime.Now) + "  en semaine IMPAIRE"; rdBtnImpaire.Checked = true; }
+            chbxClasse(sender, e);
         }
 
-        private void chbx_CheckedChanged(object sender, EventArgs e)
+        private void chbxClasse(object sender, EventArgs e)
         {
             if (_connexionBdd.State == ConnectionState.Closed) { _connexionBdd.Open(); }
 
@@ -93,9 +88,9 @@ namespace Vie_Scolaire
             _connexionBdd.Close();
         }
 
-        private void rdBtnImpaire_CheckedChanged(object sender, EventArgs e)
+        private void rdBtnPaireImpaire(object sender, EventArgs e)
         {
-            if (rdBtnImpaire.Checked == true && GetWeekDayName(DateTime.Now) == "mercredi")
+            if (rdBtnImpaire.Checked == true && NomDuJour(DateTime.Now) == "mercredi")
             {
                 chbx5A.Checked = true;
                 chbx5B.Checked = true;
@@ -108,7 +103,7 @@ namespace Vie_Scolaire
                 chbx6B.Checked = false;
                 chbx6C.Checked = false;
             }
-            if (rdBtnPaire.Checked == true && GetWeekDayName(DateTime.Now) == "mercredi")
+            if (rdBtnPaire.Checked == true && NomDuJour(DateTime.Now) == "mercredi")
             {
                 chbx5A.Checked = false;
                 chbx5B.Checked = false;
@@ -121,6 +116,11 @@ namespace Vie_Scolaire
                 chbx6B.Checked = true;
                 chbx6C.Checked = true;
             }
+        }
+
+        public string NomDuJour(DateTime d)
+        {
+            return System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.DayNames[(int)d.DayOfWeek];
         }
     }
 }

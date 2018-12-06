@@ -292,6 +292,127 @@ namespace Vie_Scolaire
             txbInfosEleves.SelectionStart = txbInfosEleves.Text.Length + 1;
         }
 
+        private void btnSelf_Click(object sender, EventArgs e)
+        {
+            Self self = new Self();
+            self.Show();
+        }
+
+        private void btnMaj_Click(object sender, EventArgs e)
+        {
+            progressBar1.Visible = true;
+            Compteur.Visible = true;
+            backgroundWorker1.RunWorkerAsync();
+        }
+
+        private void Maj_Méthode(object sender, DoWorkEventArgs e)
+        {
+            //Create COM Objects. Create a COM object for everything that is referenced
+            Excel.Application xlApp = new Excel.Application();
+            Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(@"\\serveur2008\apps\Vie scolaire\Viesco.xls");
+            Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[1];
+            Excel.Range xlRange = xlWorksheet.UsedRange;
+
+            Rowcount = xlRange.Rows.Count;
+
+            for (int i = 5; i <= Rowcount; i++)
+            {
+                {
+                    string cmdStr = "Select count(*) from Eleves where Eleve = '" + xlRange.Cells[i, 1].Value2 + "'"; //get the existence of the record as count
+
+                    OleDbCommand cmd = new OleDbCommand(cmdStr, _connexionBdd);
+
+                    int count = (int)cmd.ExecuteScalar();
+
+                    if (count > 0)
+                    {
+                        // L'élève existe déjà, on le met à jour
+                        OleDbCommand cmd2 = new OleDbCommand("update Eleves set Classe = @p2, Naissance = @p3, Responsable = @p4, Adresse = @p5, CP_Ville = @p6, Tel_Domicile = @p7, Tel_port_resp = @p8, Mail_Resp = @p9, Conjoint = @p10, Tel_port_Conjoint = @p11, Mail_Conjoint = @p12, Flag = @p13, Regime = @p14 WHERE Eleve= '" + xlRange.Cells[i, 1].Value2 + "'", _connexionBdd);
+                        cmd2.Parameters.AddWithValue("@p2", xlRange.Cells[i, 2].Value2); //classe
+                        cmd2.Parameters.AddWithValue("@p3", xlRange.Cells[i, 3].Value2); //naissance
+                        cmd2.Parameters.AddWithValue("@p4", xlRange.Cells[i, 4].Value2); //responsable
+                        cmd2.Parameters.AddWithValue("@p5", xlRange.Cells[i, 5].Value2); //adresse
+                        cmd2.Parameters.AddWithValue("@p6", xlRange.Cells[i, 6].Value2); //CP
+                        if (xlRange.Cells[i, 7].Value2 != null) cmd2.Parameters.AddWithValue("@p7", String.Format("{0:0# ## ## ## ##}", xlRange.Cells[i, 7].Value2)); else cmd2.Parameters.AddWithValue("@p7", "");
+                        if (xlRange.Cells[i, 8].Value2 != null) cmd2.Parameters.AddWithValue("@p8", String.Format("{0:0# ## ## ## ##}", xlRange.Cells[i, 8].Value2)); else cmd2.Parameters.AddWithValue("@p8", "");
+                        if (xlRange.Cells[i, 9].Value2 != null) cmd2.Parameters.AddWithValue("@p9", xlRange.Cells[i, 9].Value2); else cmd2.Parameters.AddWithValue("@p9", "");//Mail_resp
+                        if (xlRange.Cells[i, 10].Value2 != null) cmd2.Parameters.AddWithValue("@p10", xlRange.Cells[i, 10].Value2); else cmd2.Parameters.AddWithValue("@p10", "");//Conjoint
+                        if (xlRange.Cells[i, 11].Value2 != null) cmd2.Parameters.AddWithValue("@p11", String.Format("{0:0# ## ## ## ##}", xlRange.Cells[i, 11].Value2)); else cmd2.Parameters.AddWithValue("@p11", "");
+                        if (xlRange.Cells[i, 12].Value2 != null) cmd2.Parameters.AddWithValue("@p12", xlRange.Cells[i, 12].Value2); else cmd2.Parameters.AddWithValue("@p12", "");//Mail_conjoint
+                        cmd2.Parameters.AddWithValue("@p13", 1);
+                        cmd2.Parameters.AddWithValue("@p14", xlRange.Cells[i, 13].Value2);
+                        cmd2.ExecuteNonQuery();
+                    }
+                    else if (count == 0)
+                    {
+                        //L'élève n'existe pas, on le créé
+                        OleDbCommand cmd2 = new OleDbCommand("insert into Eleves (Eleve, Classe, Naissance, Responsable, Adresse, CP_Ville, Tel_Domicile, Tel_port_resp, Mail_Resp, Conjoint, Tel_port_Conjoint, Mail_Conjoint, Flag, Regime) values (@p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14)", _connexionBdd);
+                        cmd2.Parameters.AddWithValue("@p1", xlRange.Cells[i, 1].Value2); //Nom Prénom
+                        cmd2.Parameters.AddWithValue("@p2", xlRange.Cells[i, 2].Value2); //classe
+                        cmd2.Parameters.AddWithValue("@p3", xlRange.Cells[i, 3].Value2); //naissance
+                        cmd2.Parameters.AddWithValue("@p4", xlRange.Cells[i, 4].Value2); //responsable
+                        cmd2.Parameters.AddWithValue("@p5", xlRange.Cells[i, 5].Value2); //adresse
+                        cmd2.Parameters.AddWithValue("@p6", xlRange.Cells[i, 6].Value2); //CP
+                        if (xlRange.Cells[i, 7].Value2 != null) cmd2.Parameters.AddWithValue("@p7", String.Format("{0:0# ## ## ## ##}", xlRange.Cells[i, 7].Value2)); else cmd2.Parameters.AddWithValue("@p7", "");
+                        if (xlRange.Cells[i, 8].Value2 != null) cmd2.Parameters.AddWithValue("@p8", String.Format("{0:0# ## ## ## ##}", xlRange.Cells[i, 8].Value2)); else cmd2.Parameters.AddWithValue("@p8", "");
+                        if (xlRange.Cells[i, 9].Value2 != null) cmd2.Parameters.AddWithValue("@p9", xlRange.Cells[i, 9].Value2); else cmd2.Parameters.AddWithValue("@p9", "");//Mail_resp
+                        if (xlRange.Cells[i, 10].Value2 != null) cmd2.Parameters.AddWithValue("@p10", xlRange.Cells[i, 10].Value2); else cmd2.Parameters.AddWithValue("@p10", "");//Conjoint
+                        if (xlRange.Cells[i, 11].Value2 != null) cmd2.Parameters.AddWithValue("@p11", String.Format("{0:0# ## ## ## ##}", xlRange.Cells[i, 11].Value2)); else cmd2.Parameters.AddWithValue("@p11", "");
+                        if (xlRange.Cells[i, 12].Value2 != null) cmd2.Parameters.AddWithValue("@p12", xlRange.Cells[i, 12].Value2); else cmd2.Parameters.AddWithValue("@p12", "");//Mail_conjoint
+                        cmd2.Parameters.AddWithValue("@p13", 1);
+                        cmd2.Parameters.AddWithValue("@p14", xlRange.Cells[i, 13].Value2);
+                        cmd2.ExecuteNonQuery();
+                    }
+                    // Wait 100 milliseconds.
+                    //Thread.Sleep(100);
+                    // Report progress.
+                    backgroundWorker1.ReportProgress(i);
+                }
+            }
+            //L'élève n'est plus au collège, on le supprime
+            OleDbCommand cmd3 = new OleDbCommand("DELETE * FROM Eleves WHERE Flag Is Null", _connexionBdd);
+            cmd3.ExecuteNonQuery();
+
+            //Réinitialisation du flag
+            OleDbCommand cmd4 = new OleDbCommand("update Eleves set Flag = Null", _connexionBdd);
+            cmd4.ExecuteNonQuery();
+
+            //cleanup
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+
+            //release com objects to fully kill excel process from running in the background
+            Marshal.ReleaseComObject(xlRange);
+            Marshal.ReleaseComObject(xlWorksheet);
+
+            //close and release
+            xlWorkbook.Close();
+            Marshal.ReleaseComObject(xlWorkbook);
+
+            //quit and release
+            xlApp.Quit();
+            Marshal.ReleaseComObject(xlApp);
+        }
+
+        private void Maj_Progression(object sender,
+            ProgressChangedEventArgs e)
+        {
+            progressBar1.Maximum = Rowcount;
+            int rowCount = Rowcount - 4;
+            // Change the value of the ProgressBar to the BackgroundWorker progress.
+            progressBar1.Value = e.ProgressPercentage;
+            // Set the text.
+            Compteur.Text = (e.ProgressPercentage - 4) + @" / " + rowCount;
+        }
+
+        private void Maj_Terminé(object sender, RunWorkerCompletedEventArgs e)
+        {
+            int rowCount = Rowcount - 4;
+            progressBar1.Visible = false;
+            Compteur.Visible = false;
+            MessageBox.Show(@"Opération terminée avec succes !" + Environment.NewLine + rowCount + @" élèves mis à jour");
+        }
+
         private void TxbInfosElevesTextChanged(object sender, EventArgs e)
         {
             OleDbCommand cmd = new OleDbCommand("update Eleves set Infos = @p1 WHERE Eleve= '" + cbxEleves.Text + "'", _connexionBdd);
@@ -402,121 +523,6 @@ namespace Vie_Scolaire
             lblClasseEleve.Text = "";
         }
 
-        private void btnMaj_Click(object sender, EventArgs e)
-        {
-            progressBar1.Visible = true;
-            Compteur.Visible = true;
-            backgroundWorker1.RunWorkerAsync();
-        }
-
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-        {
-            //Create COM Objects. Create a COM object for everything that is referenced
-            Excel.Application xlApp = new Excel.Application();
-            Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(@"\\serveur2008\apps\Vie scolaire\Viesco.xls");
-            Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[1];
-            Excel.Range xlRange = xlWorksheet.UsedRange;
-
-            Rowcount = xlRange.Rows.Count;
-
-            for (int i = 5; i <= Rowcount; i++)
-            {
-                {
-                    string cmdStr = "Select count(*) from Eleves where Eleve = '" + xlRange.Cells[i, 1].Value2 + "'"; //get the existence of the record as count
-
-                    OleDbCommand cmd = new OleDbCommand(cmdStr, _connexionBdd);
-
-                    int count = (int)cmd.ExecuteScalar();
-
-                    if (count > 0)
-                    {
-                        // L'élève existe déjà, on le met à jour
-                        OleDbCommand cmd2 = new OleDbCommand("update Eleves set Classe = @p2, Naissance = @p3, Responsable = @p4, Adresse = @p5, CP_Ville = @p6, Tel_Domicile = @p7, Tel_port_resp = @p8, Mail_Resp = @p9, Conjoint = @p10, Tel_port_Conjoint = @p11, Mail_Conjoint = @p12, Flag = @p13, Regime = @p14 WHERE Eleve= '" + xlRange.Cells[i, 1].Value2 + "'", _connexionBdd);
-                        cmd2.Parameters.AddWithValue("@p2", xlRange.Cells[i, 2].Value2); //classe
-                        cmd2.Parameters.AddWithValue("@p3", xlRange.Cells[i, 3].Value2); //naissance
-                        cmd2.Parameters.AddWithValue("@p4", xlRange.Cells[i, 4].Value2); //responsable
-                        cmd2.Parameters.AddWithValue("@p5", xlRange.Cells[i, 5].Value2); //adresse
-                        cmd2.Parameters.AddWithValue("@p6", xlRange.Cells[i, 6].Value2); //CP
-                        if (xlRange.Cells[i, 7].Value2 != null) cmd2.Parameters.AddWithValue("@p7", String.Format("{0:0# ## ## ## ##}", xlRange.Cells[i, 7].Value2)); else cmd2.Parameters.AddWithValue("@p7", "");
-                        if (xlRange.Cells[i, 8].Value2 != null) cmd2.Parameters.AddWithValue("@p8", String.Format("{0:0# ## ## ## ##}", xlRange.Cells[i, 8].Value2)); else cmd2.Parameters.AddWithValue("@p8", "");
-                        if (xlRange.Cells[i, 9].Value2 != null) cmd2.Parameters.AddWithValue("@p9", xlRange.Cells[i, 9].Value2); else cmd2.Parameters.AddWithValue("@p9", "");//Mail_resp
-                        if (xlRange.Cells[i, 10].Value2 != null) cmd2.Parameters.AddWithValue("@p10", xlRange.Cells[i, 10].Value2); else cmd2.Parameters.AddWithValue("@p10", "");//Conjoint
-                        if (xlRange.Cells[i, 11].Value2 != null) cmd2.Parameters.AddWithValue("@p11", String.Format("{0:0# ## ## ## ##}", xlRange.Cells[i, 11].Value2)); else cmd2.Parameters.AddWithValue("@p11", "");
-                        if (xlRange.Cells[i, 12].Value2 != null) cmd2.Parameters.AddWithValue("@p12", xlRange.Cells[i, 12].Value2); else cmd2.Parameters.AddWithValue("@p12", "");//Mail_conjoint
-                        cmd2.Parameters.AddWithValue("@p13", 1);
-                        cmd2.Parameters.AddWithValue("@p14", xlRange.Cells[i, 13].Value2);
-                        cmd2.ExecuteNonQuery();
-                    }
-                    else if (count == 0)
-                    {
-                        //L'élève n'existe pas, on le créé
-                        OleDbCommand cmd2 = new OleDbCommand("insert into Eleves (Eleve, Classe, Naissance, Responsable, Adresse, CP_Ville, Tel_Domicile, Tel_port_resp, Mail_Resp, Conjoint, Tel_port_Conjoint, Mail_Conjoint, Flag, Regime) values (@p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14)", _connexionBdd);
-                        cmd2.Parameters.AddWithValue("@p1", xlRange.Cells[i, 1].Value2); //Nom Prénom
-                        cmd2.Parameters.AddWithValue("@p2", xlRange.Cells[i, 2].Value2); //classe
-                        cmd2.Parameters.AddWithValue("@p3", xlRange.Cells[i, 3].Value2); //naissance
-                        cmd2.Parameters.AddWithValue("@p4", xlRange.Cells[i, 4].Value2); //responsable
-                        cmd2.Parameters.AddWithValue("@p5", xlRange.Cells[i, 5].Value2); //adresse
-                        cmd2.Parameters.AddWithValue("@p6", xlRange.Cells[i, 6].Value2); //CP
-                        if (xlRange.Cells[i, 7].Value2 != null) cmd2.Parameters.AddWithValue("@p7", String.Format("{0:0# ## ## ## ##}", xlRange.Cells[i, 7].Value2)); else cmd2.Parameters.AddWithValue("@p7", "");
-                        if (xlRange.Cells[i, 8].Value2 != null) cmd2.Parameters.AddWithValue("@p8", String.Format("{0:0# ## ## ## ##}", xlRange.Cells[i, 8].Value2)); else cmd2.Parameters.AddWithValue("@p8", "");
-                        if (xlRange.Cells[i, 9].Value2 != null) cmd2.Parameters.AddWithValue("@p9", xlRange.Cells[i, 9].Value2); else cmd2.Parameters.AddWithValue("@p9", "");//Mail_resp
-                        if (xlRange.Cells[i, 10].Value2 != null) cmd2.Parameters.AddWithValue("@p10", xlRange.Cells[i, 10].Value2); else cmd2.Parameters.AddWithValue("@p10", "");//Conjoint
-                        if (xlRange.Cells[i, 11].Value2 != null) cmd2.Parameters.AddWithValue("@p11", String.Format("{0:0# ## ## ## ##}", xlRange.Cells[i, 11].Value2)); else cmd2.Parameters.AddWithValue("@p11", "");
-                        if (xlRange.Cells[i, 12].Value2 != null) cmd2.Parameters.AddWithValue("@p12", xlRange.Cells[i, 12].Value2); else cmd2.Parameters.AddWithValue("@p12", "");//Mail_conjoint
-                        cmd2.Parameters.AddWithValue("@p13", 1);
-                        cmd2.Parameters.AddWithValue("@p14", xlRange.Cells[i, 13].Value2);
-                        cmd2.ExecuteNonQuery();
-                    }
-                    // Wait 100 milliseconds.
-                    //Thread.Sleep(100);
-                    // Report progress.
-                    backgroundWorker1.ReportProgress(i);
-                }
-            }
-            //L'élève n'est plus au collège, on le supprime
-            OleDbCommand cmd3 = new OleDbCommand("DELETE * FROM Eleves WHERE Flag Is Null", _connexionBdd);
-            cmd3.ExecuteNonQuery();
-
-            //Réinitialisation du flag
-            OleDbCommand cmd4 = new OleDbCommand("update Eleves set Flag = Null", _connexionBdd);
-            cmd4.ExecuteNonQuery();
-
-            //cleanup
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-
-            //release com objects to fully kill excel process from running in the background
-            Marshal.ReleaseComObject(xlRange);
-            Marshal.ReleaseComObject(xlWorksheet);
-
-            //close and release
-            xlWorkbook.Close();
-            Marshal.ReleaseComObject(xlWorkbook);
-
-            //quit and release
-            xlApp.Quit();
-            Marshal.ReleaseComObject(xlApp);
-        }
-
-        private void backgroundWorker1_ProgressChanged(object sender,
-            ProgressChangedEventArgs e)
-        {
-            progressBar1.Maximum = Rowcount;
-            int rowCount = Rowcount - 4;
-            // Change the value of the ProgressBar to the BackgroundWorker progress.
-            progressBar1.Value = e.ProgressPercentage;
-            // Set the text.
-            Compteur.Text = (e.ProgressPercentage - 4) + @" / " + rowCount;
-        }
-
-        private void backgroundWorker1_Completed(object sender, RunWorkerCompletedEventArgs e)
-        {
-            int rowCount = Rowcount - 4;
-            progressBar1.Visible = false;
-            Compteur.Visible = false;
-            MessageBox.Show(@"Opération terminée avec succes !" + Environment.NewLine + rowCount + @" élèves mis à jour");
-        }
-
         private void ChercherAnniversaire()
         {
             OleDbCommand cmd = new OleDbCommand("SELECT Eleve, Naissance FROM Eleves", _connexionBdd);
@@ -533,12 +539,6 @@ namespace Vie_Scolaire
                                            age + @" ans) - ";
                 }
             }
-        }
-
-        private void btnSelf_Click(object sender, EventArgs e)
-        {
-            Self self = new Self();
-            self.Show();
         }
     }
 }

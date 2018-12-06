@@ -106,7 +106,7 @@
             this.chbx3A.TabIndex = 4;
             this.chbx3A.Text = "3A";
             this.chbx3A.UseVisualStyleBackColor = true;
-            this.chbx3A.CheckedChanged += new System.EventHandler(this.chbx_CheckedChanged);
+            this.chbx3A.CheckedChanged += new System.EventHandler(this.chbxClasse);
             // 
             // chbx3B
             // 
@@ -117,7 +117,7 @@
             this.chbx3B.TabIndex = 5;
             this.chbx3B.Text = "3B";
             this.chbx3B.UseVisualStyleBackColor = true;
-            this.chbx3B.CheckedChanged += new System.EventHandler(this.chbx_CheckedChanged);
+            this.chbx3B.CheckedChanged += new System.EventHandler(this.chbxClasse);
             // 
             // chbx3C
             // 
@@ -128,7 +128,7 @@
             this.chbx3C.TabIndex = 6;
             this.chbx3C.Text = "3C";
             this.chbx3C.UseVisualStyleBackColor = true;
-            this.chbx3C.CheckedChanged += new System.EventHandler(this.chbx_CheckedChanged);
+            this.chbx3C.CheckedChanged += new System.EventHandler(this.chbxClasse);
             // 
             // chbx3D
             // 
@@ -139,7 +139,7 @@
             this.chbx3D.TabIndex = 7;
             this.chbx3D.Text = "3D";
             this.chbx3D.UseVisualStyleBackColor = true;
-            this.chbx3D.CheckedChanged += new System.EventHandler(this.chbx_CheckedChanged);
+            this.chbx3D.CheckedChanged += new System.EventHandler(this.chbxClasse);
             // 
             // chbx3E
             // 
@@ -150,7 +150,7 @@
             this.chbx3E.TabIndex = 8;
             this.chbx3E.Text = "3E";
             this.chbx3E.UseVisualStyleBackColor = true;
-            this.chbx3E.CheckedChanged += new System.EventHandler(this.chbx_CheckedChanged);
+            this.chbx3E.CheckedChanged += new System.EventHandler(this.chbxClasse);
             // 
             // chbx4A
             // 
@@ -161,7 +161,7 @@
             this.chbx4A.TabIndex = 9;
             this.chbx4A.Text = "4A";
             this.chbx4A.UseVisualStyleBackColor = true;
-            this.chbx4A.CheckedChanged += new System.EventHandler(this.chbx_CheckedChanged);
+            this.chbx4A.CheckedChanged += new System.EventHandler(this.chbxClasse);
             // 
             // chbx4B
             // 
@@ -172,7 +172,7 @@
             this.chbx4B.TabIndex = 10;
             this.chbx4B.Text = "4B";
             this.chbx4B.UseVisualStyleBackColor = true;
-            this.chbx4B.CheckedChanged += new System.EventHandler(this.chbx_CheckedChanged);
+            this.chbx4B.CheckedChanged += new System.EventHandler(this.chbxClasse);
             // 
             // chbx4C
             // 
@@ -183,7 +183,7 @@
             this.chbx4C.TabIndex = 11;
             this.chbx4C.Text = "4C";
             this.chbx4C.UseVisualStyleBackColor = true;
-            this.chbx4C.CheckedChanged += new System.EventHandler(this.chbx_CheckedChanged);
+            this.chbx4C.CheckedChanged += new System.EventHandler(this.chbxClasse);
             // 
             // chbx4D
             // 
@@ -194,7 +194,7 @@
             this.chbx4D.TabIndex = 12;
             this.chbx4D.Text = "4D";
             this.chbx4D.UseVisualStyleBackColor = true;
-            this.chbx4D.CheckedChanged += new System.EventHandler(this.chbx_CheckedChanged);
+            this.chbx4D.CheckedChanged += new System.EventHandler(this.chbxClasse);
             // 
             // chbx4E
             // 
@@ -205,7 +205,7 @@
             this.chbx4E.TabIndex = 13;
             this.chbx4E.Text = "4E";
             this.chbx4E.UseVisualStyleBackColor = true;
-            this.chbx4E.CheckedChanged += new System.EventHandler(this.chbx_CheckedChanged);
+            this.chbx4E.CheckedChanged += new System.EventHandler(this.chbxClasse);
             // 
             // gbxClasses
             // 
@@ -245,7 +245,7 @@
             this.chbx5A.TabIndex = 14;
             this.chbx5A.Text = "5A";
             this.chbx5A.UseVisualStyleBackColor = true;
-            this.chbx5A.CheckedChanged += new System.EventHandler(this.chbx_CheckedChanged);
+            this.chbx5A.CheckedChanged += new System.EventHandler(this.chbxClasse);
             // 
             // chbx5B
             // 
@@ -256,7 +256,7 @@
             this.chbx5B.TabIndex = 15;
             this.chbx5B.Text = "5B";
             this.chbx5B.UseVisualStyleBackColor = true;
-            this.chbx5B.CheckedChanged += new System.EventHandler(this.chbx_CheckedChanged);
+            this.chbx5B.CheckedChanged += new System.EventHandler(this.chbxClasse);
             // 
             // chbx5C
             // 
@@ -267,7 +267,7 @@
             this.chbx5C.TabIndex = 16;
             this.chbx5C.Text = "5C";
             this.chbx5C.UseVisualStyleBackColor = true;
-            this.chbx5C.CheckedChanged += new System.EventHandler(this.chbx_CheckedChanged);
+            this.chbx5C.CheckedChanged += new System.EventHandler(this.chbxClasse);
             // 
             // chbx5D
             // 
@@ -278,7 +278,7 @@
             this.chbx5D.TabIndex = 17;
             this.chbx5D.Text = "5D";
             this.chbx5D.UseVisualStyleBackColor = true;
-            this.chbx5D.CheckedChanged += new System.EventHandler(this.chbx_CheckedChanged);
+            this.chbx5D.CheckedChanged += new System.EventHandler(this.chbxClasse);
             // 
             // chbx5E
             // 
@@ -289,7 +289,7 @@
             this.chbx5E.TabIndex = 18;
             this.chbx5E.Text = "5E";
             this.chbx5E.UseVisualStyleBackColor = true;
-            this.chbx5E.CheckedChanged += new System.EventHandler(this.chbx_CheckedChanged);
+            this.chbx5E.CheckedChanged += new System.EventHandler(this.chbxClasse);
             // 
             // chbx6A
             // 
@@ -300,7 +300,7 @@
             this.chbx6A.TabIndex = 19;
             this.chbx6A.Text = "6A";
             this.chbx6A.UseVisualStyleBackColor = true;
-            this.chbx6A.CheckedChanged += new System.EventHandler(this.chbx_CheckedChanged);
+            this.chbx6A.CheckedChanged += new System.EventHandler(this.chbxClasse);
             // 
             // chbx6B
             // 
@@ -311,7 +311,7 @@
             this.chbx6B.TabIndex = 20;
             this.chbx6B.Text = "6B";
             this.chbx6B.UseVisualStyleBackColor = true;
-            this.chbx6B.CheckedChanged += new System.EventHandler(this.chbx_CheckedChanged);
+            this.chbx6B.CheckedChanged += new System.EventHandler(this.chbxClasse);
             // 
             // chbx6C
             // 
@@ -322,7 +322,7 @@
             this.chbx6C.TabIndex = 21;
             this.chbx6C.Text = "6C";
             this.chbx6C.UseVisualStyleBackColor = true;
-            this.chbx6C.CheckedChanged += new System.EventHandler(this.chbx_CheckedChanged);
+            this.chbx6C.CheckedChanged += new System.EventHandler(this.chbxClasse);
             // 
             // chbx6D
             // 
@@ -333,7 +333,7 @@
             this.chbx6D.TabIndex = 22;
             this.chbx6D.Text = "6D";
             this.chbx6D.UseVisualStyleBackColor = true;
-            this.chbx6D.CheckedChanged += new System.EventHandler(this.chbx_CheckedChanged);
+            this.chbx6D.CheckedChanged += new System.EventHandler(this.chbxClasse);
             // 
             // chbx6E
             // 
@@ -344,7 +344,7 @@
             this.chbx6E.TabIndex = 23;
             this.chbx6E.Text = "6E";
             this.chbx6E.UseVisualStyleBackColor = true;
-            this.chbx6E.CheckedChanged += new System.EventHandler(this.chbx_CheckedChanged);
+            this.chbx6E.CheckedChanged += new System.EventHandler(this.chbxClasse);
             // 
             // rdBtnImpaire
             // 
@@ -356,7 +356,7 @@
             this.rdBtnImpaire.TabStop = true;
             this.rdBtnImpaire.Text = "Semaine impaire";
             this.rdBtnImpaire.UseVisualStyleBackColor = true;
-            this.rdBtnImpaire.CheckedChanged += new System.EventHandler(this.rdBtnImpaire_CheckedChanged);
+            this.rdBtnImpaire.CheckedChanged += new System.EventHandler(this.rdBtnPaireImpaire);
             // 
             // rdBtnPaire
             // 
