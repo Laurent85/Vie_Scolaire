@@ -30,6 +30,7 @@ namespace Vie_Scolaire
 
         //private readonly OleDbConnection _connexionBdd = new OleDbConnection(@"Provider = Microsoft.ACE.OLEDB.12.0; Data Source = D:\Viescolaire.accdb");
         public int Rowcount;
+
         public string DateDuJour = DateTime.Now.ToString("dd/MM");
 
         private void OuvertureLogiciel(object sender, EventArgs e)
@@ -49,6 +50,7 @@ namespace Vie_Scolaire
             adapter.Fill(source);
             CbxClasses.DataSource = source;
             CbxClasses.DisplayMember = "Classe";
+            lblAnniversaire.Text = "Anniversaires du jour : ";
             ChercherAnniversaire();
             //CbxClasses.SelectedText = "Toutes les classes";
         }
@@ -429,7 +431,7 @@ namespace Vie_Scolaire
                     if (count > 0)
                     {
                         // L'élève existe déjà, on le met à jour
-                        OleDbCommand cmd2 = new OleDbCommand("update Eleves set Classe = @p2, Naissance = @p3, Responsable = @p4, Adresse = @p5, CP_Ville = @p6, Tel_Domicile = @p7, Tel_port_resp = @p8, Mail_Resp = @p9, Conjoint = @p10, Tel_port_Conjoint = @p11, Mail_Conjoint = @p12, Flag = @p13 WHERE Eleve= '" + xlRange.Cells[i, 1].Value2 + "'", _connexionBdd);
+                        OleDbCommand cmd2 = new OleDbCommand("update Eleves set Classe = @p2, Naissance = @p3, Responsable = @p4, Adresse = @p5, CP_Ville = @p6, Tel_Domicile = @p7, Tel_port_resp = @p8, Mail_Resp = @p9, Conjoint = @p10, Tel_port_Conjoint = @p11, Mail_Conjoint = @p12, Flag = @p13, Regime = @p14 WHERE Eleve= '" + xlRange.Cells[i, 1].Value2 + "'", _connexionBdd);
                         cmd2.Parameters.AddWithValue("@p2", xlRange.Cells[i, 2].Value2); //classe
                         cmd2.Parameters.AddWithValue("@p3", xlRange.Cells[i, 3].Value2); //naissance
                         cmd2.Parameters.AddWithValue("@p4", xlRange.Cells[i, 4].Value2); //responsable
@@ -442,12 +444,13 @@ namespace Vie_Scolaire
                         if (xlRange.Cells[i, 11].Value2 != null) cmd2.Parameters.AddWithValue("@p11", String.Format("{0:0# ## ## ## ##}", xlRange.Cells[i, 11].Value2)); else cmd2.Parameters.AddWithValue("@p11", "");
                         if (xlRange.Cells[i, 12].Value2 != null) cmd2.Parameters.AddWithValue("@p12", xlRange.Cells[i, 12].Value2); else cmd2.Parameters.AddWithValue("@p12", "");//Mail_conjoint
                         cmd2.Parameters.AddWithValue("@p13", 1);
+                        cmd2.Parameters.AddWithValue("@p14", xlRange.Cells[i, 13].Value2);
                         cmd2.ExecuteNonQuery();
                     }
                     else if (count == 0)
                     {
                         //L'élève n'existe pas, on le créé
-                        OleDbCommand cmd2 = new OleDbCommand("insert into Eleves (Eleve, Classe, Naissance, Responsable, Adresse, CP_Ville, Tel_Domicile, Tel_port_resp, Mail_Resp, Conjoint, Tel_port_Conjoint, Mail_Conjoint, Flag) values (@p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13)", _connexionBdd);
+                        OleDbCommand cmd2 = new OleDbCommand("insert into Eleves (Eleve, Classe, Naissance, Responsable, Adresse, CP_Ville, Tel_Domicile, Tel_port_resp, Mail_Resp, Conjoint, Tel_port_Conjoint, Mail_Conjoint, Flag, Regime) values (@p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14)", _connexionBdd);
                         cmd2.Parameters.AddWithValue("@p1", xlRange.Cells[i, 1].Value2); //Nom Prénom
                         cmd2.Parameters.AddWithValue("@p2", xlRange.Cells[i, 2].Value2); //classe
                         cmd2.Parameters.AddWithValue("@p3", xlRange.Cells[i, 3].Value2); //naissance
@@ -461,6 +464,7 @@ namespace Vie_Scolaire
                         if (xlRange.Cells[i, 11].Value2 != null) cmd2.Parameters.AddWithValue("@p11", String.Format("{0:0# ## ## ## ##}", xlRange.Cells[i, 11].Value2)); else cmd2.Parameters.AddWithValue("@p11", "");
                         if (xlRange.Cells[i, 12].Value2 != null) cmd2.Parameters.AddWithValue("@p12", xlRange.Cells[i, 12].Value2); else cmd2.Parameters.AddWithValue("@p12", "");//Mail_conjoint
                         cmd2.Parameters.AddWithValue("@p13", 1);
+                        cmd2.Parameters.AddWithValue("@p14", xlRange.Cells[i, 13].Value2);
                         cmd2.ExecuteNonQuery();
                     }
                     // Wait 100 milliseconds.
@@ -519,8 +523,6 @@ namespace Vie_Scolaire
             OleDbDataReader reader = cmd.ExecuteReader();
             while (reader != null && reader.Read())
             {
-                
-
                 if (reader["Naissance"].ToString().Contains(DateDuJour))
                 {
                     int annéeNaissance = int.Parse(reader["Naissance"].ToString().Substring(6, 2));
@@ -531,6 +533,12 @@ namespace Vie_Scolaire
                                            age + @" ans) - ";
                 }
             }
+        }
+
+        private void btnSelf_Click(object sender, EventArgs e)
+        {
+            Self self = new Self();
+            self.Show();
         }
     }
 }

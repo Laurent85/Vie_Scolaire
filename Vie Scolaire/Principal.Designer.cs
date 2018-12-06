@@ -59,6 +59,7 @@
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.Compteur = new System.Windows.Forms.Label();
             this.lblAnniversaire = new System.Windows.Forms.Label();
+            this.btnSelf = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.PhotoEleve)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PhotoLogoCollege)).BeginInit();
             this.grpBoxResponsables.SuspendLayout();
@@ -366,12 +367,23 @@
             this.lblAnniversaire.TabIndex = 29;
             this.lblAnniversaire.Text = "Anniversaires du jour : ";
             // 
+            // btnSelf
+            // 
+            this.btnSelf.Location = new System.Drawing.Point(72, 112);
+            this.btnSelf.Name = "btnSelf";
+            this.btnSelf.Size = new System.Drawing.Size(75, 23);
+            this.btnSelf.TabIndex = 30;
+            this.btnSelf.Text = "Self";
+            this.btnSelf.UseVisualStyleBackColor = true;
+            this.btnSelf.Click += new System.EventHandler(this.btnSelf_Click);
+            // 
             // Principal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.PapayaWhip;
             this.ClientSize = new System.Drawing.Size(1252, 642);
+            this.Controls.Add(this.btnSelf);
             this.Controls.Add(this.lblAnniversaire);
             this.Controls.Add(this.Compteur);
             this.Controls.Add(this.progressBar1);
@@ -437,6 +449,7 @@
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Label Compteur;
         private System.Windows.Forms.Label lblAnniversaire;
+        private System.Windows.Forms.Button btnSelf;
     }
 }
 
