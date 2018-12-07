@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Self));
             this.LbxAbsents = new System.Windows.Forms.ListBox();
             this.LbxPrésents = new System.Windows.Forms.ListBox();
             this.lblAbsents = new System.Windows.Forms.Label();
@@ -56,23 +57,30 @@
             this.rdBtnImpaire = new System.Windows.Forms.RadioButton();
             this.rdBtnPaire = new System.Windows.Forms.RadioButton();
             this.lblSemaine = new System.Windows.Forms.Label();
+            this.lblFichiersAbsents = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.gbxClasses.SuspendLayout();
             this.SuspendLayout();
             // 
             // LbxAbsents
             // 
+            this.LbxAbsents.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.LbxAbsents.FormattingEnabled = true;
-            this.LbxAbsents.Location = new System.Drawing.Point(365, 137);
+            this.LbxAbsents.Location = new System.Drawing.Point(320, 164);
             this.LbxAbsents.Name = "LbxAbsents";
             this.LbxAbsents.Size = new System.Drawing.Size(193, 290);
+            this.LbxAbsents.Sorted = true;
             this.LbxAbsents.TabIndex = 0;
             // 
             // LbxPrésents
             // 
+            this.LbxPrésents.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.LbxPrésents.FormattingEnabled = true;
-            this.LbxPrésents.Location = new System.Drawing.Point(595, 137);
+            this.LbxPrésents.Location = new System.Drawing.Point(571, 164);
             this.LbxPrésents.Name = "LbxPrésents";
             this.LbxPrésents.Size = new System.Drawing.Size(193, 290);
+            this.LbxPrésents.Sorted = true;
             this.LbxPrésents.TabIndex = 1;
             // 
             // lblAbsents
@@ -80,7 +88,7 @@
             this.lblAbsents.AutoSize = true;
             this.lblAbsents.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAbsents.ForeColor = System.Drawing.Color.Red;
-            this.lblAbsents.Location = new System.Drawing.Point(379, 99);
+            this.lblAbsents.Location = new System.Drawing.Point(334, 126);
             this.lblAbsents.Name = "lblAbsents";
             this.lblAbsents.Size = new System.Drawing.Size(52, 13);
             this.lblAbsents.TabIndex = 2;
@@ -91,7 +99,7 @@
             this.lblPrésents.AutoSize = true;
             this.lblPrésents.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPrésents.ForeColor = System.Drawing.Color.Green;
-            this.lblPrésents.Location = new System.Drawing.Point(607, 99);
+            this.lblPrésents.Location = new System.Drawing.Point(583, 126);
             this.lblPrésents.Name = "lblPrésents";
             this.lblPrésents.Size = new System.Drawing.Size(56, 13);
             this.lblPrésents.TabIndex = 3;
@@ -209,6 +217,7 @@
             // 
             // gbxClasses
             // 
+            this.gbxClasses.BackColor = System.Drawing.Color.Transparent;
             this.gbxClasses.Controls.Add(this.chbx5A);
             this.gbxClasses.Controls.Add(this.chbx5B);
             this.gbxClasses.Controls.Add(this.chbx5C);
@@ -229,7 +238,7 @@
             this.gbxClasses.Controls.Add(this.chbx4C);
             this.gbxClasses.Controls.Add(this.chbx4D);
             this.gbxClasses.Controls.Add(this.chbx4E);
-            this.gbxClasses.Location = new System.Drawing.Point(116, 137);
+            this.gbxClasses.Location = new System.Drawing.Point(54, 164);
             this.gbxClasses.Name = "gbxClasses";
             this.gbxClasses.Size = new System.Drawing.Size(210, 290);
             this.gbxClasses.TabIndex = 24;
@@ -349,19 +358,20 @@
             // rdBtnImpaire
             // 
             this.rdBtnImpaire.AutoSize = true;
-            this.rdBtnImpaire.Location = new System.Drawing.Point(116, 97);
+            this.rdBtnImpaire.BackColor = System.Drawing.SystemColors.Control;
+            this.rdBtnImpaire.Location = new System.Drawing.Point(54, 124);
             this.rdBtnImpaire.Name = "rdBtnImpaire";
             this.rdBtnImpaire.Size = new System.Drawing.Size(102, 17);
             this.rdBtnImpaire.TabIndex = 25;
             this.rdBtnImpaire.TabStop = true;
             this.rdBtnImpaire.Text = "Semaine impaire";
-            this.rdBtnImpaire.UseVisualStyleBackColor = true;
+            this.rdBtnImpaire.UseVisualStyleBackColor = false;
             this.rdBtnImpaire.CheckedChanged += new System.EventHandler(this.rdBtnPaireImpaire);
             // 
             // rdBtnPaire
             // 
             this.rdBtnPaire.AutoSize = true;
-            this.rdBtnPaire.Location = new System.Drawing.Point(241, 97);
+            this.rdBtnPaire.Location = new System.Drawing.Point(179, 124);
             this.rdBtnPaire.Name = "rdBtnPaire";
             this.rdBtnPaire.Size = new System.Drawing.Size(92, 17);
             this.rdBtnPaire.TabIndex = 26;
@@ -372,19 +382,51 @@
             // lblSemaine
             // 
             this.lblSemaine.AutoSize = true;
-            this.lblSemaine.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSemaine.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSemaine.ForeColor = System.Drawing.Color.Blue;
-            this.lblSemaine.Location = new System.Drawing.Point(113, 53);
+            this.lblSemaine.Location = new System.Drawing.Point(202, 78);
             this.lblSemaine.Name = "lblSemaine";
-            this.lblSemaine.Size = new System.Drawing.Size(69, 16);
+            this.lblSemaine.Size = new System.Drawing.Size(62, 16);
             this.lblSemaine.TabIndex = 27;
             this.lblSemaine.Text = "Semaine";
+            // 
+            // lblFichiersAbsents
+            // 
+            this.lblFichiersAbsents.AutoSize = true;
+            this.lblFichiersAbsents.Location = new System.Drawing.Point(317, 476);
+            this.lblFichiersAbsents.Name = "lblFichiersAbsents";
+            this.lblFichiersAbsents.Size = new System.Drawing.Size(0, 13);
+            this.lblFichiersAbsents.TabIndex = 28;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(54, 471);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(210, 23);
+            this.button1.TabIndex = 29;
+            this.button1.Text = "Fichier des absents du jour";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.btnAbsentsDuJour);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Kalam", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.Teal;
+            this.label1.Location = new System.Drawing.Point(284, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(229, 51);
+            this.label1.TabIndex = 30;
+            this.label1.Text = "Prévisions self";
             // 
             // Self
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(812, 519);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.lblFichiersAbsents);
             this.Controls.Add(this.lblSemaine);
             this.Controls.Add(this.rdBtnPaire);
             this.Controls.Add(this.rdBtnImpaire);
@@ -393,7 +435,10 @@
             this.Controls.Add(this.lblAbsents);
             this.Controls.Add(this.LbxPrésents);
             this.Controls.Add(this.LbxAbsents);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "Self";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Self";
             this.Load += new System.EventHandler(this.Self_Load);
             this.gbxClasses.ResumeLayout(false);
@@ -433,5 +478,8 @@
         private System.Windows.Forms.RadioButton rdBtnImpaire;
         private System.Windows.Forms.RadioButton rdBtnPaire;
         private System.Windows.Forms.Label lblSemaine;
+        private System.Windows.Forms.Label lblFichiersAbsents;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label1;
     }
 }

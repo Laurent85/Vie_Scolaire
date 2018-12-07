@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Office.Interop.Excel;
+using System;
 using System.Data;
 using System.Data.OleDb;
 using System.Globalization;
@@ -25,9 +26,10 @@ namespace Vie_Scolaire
             // Gets the DTFI properties required by GetWeekOfYear.
             CalendarWeekRule myCWR = myCI.DateTimeFormat.CalendarWeekRule;
             DayOfWeek myFirstDOW = myCI.DateTimeFormat.FirstDayOfWeek;
+            int NumSemaine = myCal.GetWeekOfYear(DateTime.Now, myCWR, myFirstDOW);
             int NuméroSemaine = myCal.GetWeekOfYear(DateTime.Now, myCWR, myFirstDOW) % 2;
-            if (NuméroSemaine == 0) { lblSemaine.Text = "Nous sommes " + NomDuJour(DateTime.Now) + " en semaine PAIRE"; rdBtnPaire.Checked = true; }
-            else { lblSemaine.Text = "Nous sommes " + NomDuJour(DateTime.Now) + "  en semaine IMPAIRE"; rdBtnImpaire.Checked = true; }
+            if (NuméroSemaine == 0) { lblSemaine.Text = "Nous sommes le " + NomDuJour(DateTime.Now) + " " + DateTime.Now.ToString("d MMMM yyyy") + "  (Semaine " + NumSemaine + ")"; rdBtnPaire.Checked = true; rdBtnPaire.BackColor = System.Drawing.Color.Yellow; rdBtnImpaire.BackColor = System.Drawing.Color.Transparent; }
+            else { lblSemaine.Text = "Nous sommes le " + NomDuJour(DateTime.Now) + " " + DateTime.Now.ToString("d MMMM yyyy") + "  (Semaine " + NumSemaine + ")"; rdBtnImpaire.Checked = true; rdBtnImpaire.BackColor = System.Drawing.Color.Yellow; rdBtnPaire.BackColor = System.Drawing.Color.Transparent; }
             chbxClasse(sender, e);
         }
 
@@ -35,7 +37,7 @@ namespace Vie_Scolaire
         {
             if (_connexionBdd.State == ConnectionState.Closed) { _connexionBdd.Open(); }
 
-            foreach (CheckBox control in gbxClasses.Controls)
+            foreach (System.Windows.Forms.CheckBox control in gbxClasses.Controls)
             {
                 if (control.Checked == true)
                 {
@@ -121,6 +123,78 @@ namespace Vie_Scolaire
         public string NomDuJour(DateTime d)
         {
             return System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.DayNames[(int)d.DayOfWeek];
+        }
+
+        private void TraitementFichierAbsents()
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.InitialDirectory = @"\\serveur2008\apps\Vie scolaire\";
+            openFileDialog1.Title = @"Fichier des absences";
+            openFileDialog1.CheckFileExists = true;
+            openFileDialog1.CheckPathExists = true;
+            openFileDialog1.DefaultExt = "jpg";
+            openFileDialog1.Filter = @"Text files (*.xls)|*.xls|All files (*.*)|*.*";
+            openFileDialog1.FilterIndex = 2;
+            openFileDialog1.RestoreDirectory = true;
+            openFileDialog1.ReadOnlyChecked = true;
+            openFileDialog1.ShowReadOnly = true;
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+
+            {
+                lblFichiersAbsents.Text = openFileDialog1.FileName;
+            }
+
+            var excelApp = new Microsoft.Office.Interop.Excel.Application();
+            var chemin = lblFichiersAbsents.Text;
+            excelApp.Visible = false;
+
+            var workbook = excelApp.Workbooks.Add(chemin);
+            var ws = excelApp.Worksheets[1] as Worksheet;
+
+            ws.Columns[1].Delete();
+
+            var usedRange = ws.UsedRange;
+            var startRow = usedRange.Row;
+            var endRow = startRow + usedRange.Rows.Count - 1;
+
+            for (var row = 2; row <= endRow; row++)
+            {
+                if ((usedRange.Cells[row, 1].Value) == null)
+                {
+                    ((Range)ws.Rows[row, Type.Missing]).Delete(XlDeleteShiftDirection.xlShiftUp);
+                }
+            }
+
+            for (var row = 2; row <= endRow; row++)
+            {
+                usedRange.Cells[row, 4].Value = usedRange.Cells[row, 1].Value + " " + usedRange.Cells[row, 2].Value;
+
+                if (usedRange.Cells[row, 1].Value != null)
+                {
+                    if ((LbxAbsents.Items.Contains(usedRange.Cells[row, 4].Value) == true))
+                    {
+                    }
+                    else
+                    {
+                        LbxAbsents.Items.Add(usedRange.Cells[row, 4].Value);
+                        LbxPrésents.Items.Remove(usedRange.Cells[row, 4].Value);
+                    }
+                }
+            }
+
+            lblAbsents.Text = LbxAbsents.Items.Count.ToString() + @" élèves absents au self";
+            lblPrésents.Text = LbxPrésents.Items.Count.ToString() + @" élèves présents au self";
+
+            excelApp.DisplayAlerts = false;
+            workbook.Close();
+            excelApp.Quit();
+            GC.Collect();
+        }
+
+        private void btnAbsentsDuJour(object sender, EventArgs e)
+        {
+            TraitementFichierAbsents();
         }
     }
 }
